@@ -1,0 +1,26 @@
+<resources>
+    <!-- Global -->
+    <string name="app_name">TripFriend</string>
+
+    <!-- Main Activity -->
+    <string name="main_button_schedule">Order TripFriend</string>
+    <string name="main_button_list_schedules">View your orders</string>
+
+    <!-- List schedule -->
+    <string name="list_schedule_heading">Your orders</string>
+
+    <!-- Order -->
+    <string name="order_textView_heading">Order your friend - Step 1</string>
+    <string name="order_textView_location_desc">Location</string>
+    <string name="order_textView_location_item">Select location</string>
+    <string name="order_textView_language_desc">Language</string>
+    <string name="order_textView_language_item">Select language</string>
+    <string name="order_textView_timespan_desc">Time span</string>
+    <string name="order_textView_timespan_item">Select time span</string>
+    <string name="order_button_datepicker">Select date</string>
+    <string name="order_button_timepicker">Select time</string>
+    <string name="order_button_pick_friend">Find TripFriend</string>
+
+    <string name="orderF_button_order">Order your TripFriend</string>
+
+</resources>
