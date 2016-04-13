@@ -20,6 +20,7 @@
         android:text="@string/main_button_list_schedules"
         android:id="@+id/main_button_list_schedules"
         android:layout_marginTop="52dp"
+        android:layout_below="@+id/main_button_schedule"
         android:layout_alignTop="@+id/main_button_schedule"
         android:layout_alignLeft="@+id/main_button_schedule"
         android:layout_alignStart="@+id/main_button_schedule" />

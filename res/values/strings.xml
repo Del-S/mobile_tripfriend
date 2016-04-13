@@ -22,5 +22,15 @@
     <string name="order_button_pick_friend">Find TripFriend</string>
 
     <string name="orderF_button_order">Order your TripFriend</string>
+    <!-- Order PickFriend -->
+
+    <!-- Order User -->
+    <string name="orderU_heading">User information</string>
+    <string name="orderU_name">Name</string>
+    <string name="orderU_email">Email</string>
+    <string name="orderU_phone">Phone number</string>
+    <string name="orderU_group">Group</string>
+    <string name="orderU_finish">Complete registration</string>
+
 
 </resources>

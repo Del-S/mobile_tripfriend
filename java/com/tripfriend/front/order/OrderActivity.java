@@ -3,9 +3,11 @@ package com.tripfriend.front.order;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,8 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
     OrderDialogFragment dialogFragment;
     TextView locationView, languageView, timespanView;
     Boolean sDate, sTime, sLocation, sLanguage, sTimespan;
+    List<String> schedule_preference;
+    DateFormat df;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +42,31 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
         setContentView(R.layout.activity_order);
 
         config = LoadConfiguration.getConfig();
-        schedule = new Schedule();
-        scheduled_date = Calendar.getInstance();
+        schedule = Schedule.getInstance();
+        scheduled_date = schedule.getCalendar_start();
         dialogFragment = new OrderDialogFragment();
-        sDate = false;
-        sTime = false;
-        sLocation = false;
-        sLanguage = false;
-        sTimespan = false;
+        df = new SimpleDateFormat(config.getDate_format());
+
+        sDate = true;
+        sTime = true;
+        sLocation = true;
+        sLanguage = true;
+        sTimespan = true;
+
+        if(scheduled_date == null) {
+            scheduled_date = Calendar.getInstance();
+            sDate = false;
+            sTime = false;
+        }
+        if(schedule.getLocation() == -1) {
+            sLocation = false;
+        }
+        if(schedule.getLanguage() == -1) {
+            sLanguage = false;
+        }
+        if(schedule.getTime_span() == -1) {
+            sTimespan = false;
+        }
 
         loadSelects();
         loadDateTime();
@@ -68,13 +89,16 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
     private void loadSelects() {
         LinearLayout location = (LinearLayout) findViewById(R.id.order_layout_location);
         locationView = (TextView) findViewById(R.id.order_textView_location_item);
+        if(schedule.getLocation() != -1) {
+            locationView.setText((String) config.getLocations().get(schedule.getLocation()));
+        }
 
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("locations", new ArrayList<String>(config.getLocations()));
-                bundle.putInt("locations_selected", config.getLocations().indexOf(locationView.getText()));
+                bundle.putInt("locations_selected", schedule.getLocation());
                 dialogFragment.setArguments(bundle);
 
                 dialogFragment.show(getSupportFragmentManager(), "locationPicker");
@@ -83,13 +107,16 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
 
         LinearLayout language = (LinearLayout) findViewById(R.id.order_layout_language);
         languageView = (TextView) findViewById(R.id.order_textView_language_item);
+        if(schedule.getLanguage() != -1) {
+            languageView.setText((String) config.getLanguages().get(schedule.getLanguage()));
+        }
 
         language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("languages", new ArrayList<String>(config.getLanguages()));
-                bundle.putInt("languages_selected", config.getLanguages().indexOf(languageView.getText()));
+                bundle.putInt("languages_selected", schedule.getLanguage());
                 dialogFragment.setArguments(bundle);
 
                 dialogFragment.show(getSupportFragmentManager(), "languagePicker");
@@ -98,13 +125,16 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
 
         LinearLayout timespan = (LinearLayout) findViewById(R.id.order_layout_timespan);
         timespanView = (TextView) findViewById(R.id.order_textView_timespan_item);
+        if(schedule.getTime_span() != -1) {
+            timespanView.setText((String) config.getTime_spans().get(schedule.getTime_span()));
+        }
 
         timespan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("timespans", new ArrayList<String>(config.getTime_spans()));
-                bundle.putInt("timespans_selected", config.getTime_spans().indexOf(timespanView.getText()));
+                bundle.putInt("timespans_selected", schedule.getTime_span());
                 dialogFragment.setArguments(bundle);
 
                 dialogFragment.show(getSupportFragmentManager(), "timespanPicker");
@@ -115,6 +145,13 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
     private void loadDateTime() {
         buttonDate = (Button) findViewById(R.id.order_button_datepicker);
         buttonTime = (Button) findViewById(R.id.order_button_timepicker);
+        if(schedule.getCalendar_start() != null) {
+            Integer minute = scheduled_date.get(Calendar.MINUTE);
+            Integer hour = scheduled_date.get(Calendar.HOUR);
+            String bText = String.format("%02d",hour) + ":" + String.format("%02d",minute);
+            buttonTime.setText(bText);
+            buttonDate.setText(df.format(scheduled_date.getTime()));
+        }
 
         buttonDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,12 +171,26 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
     private void loadPreferences() {
         LinearLayout preferences = (LinearLayout) findViewById(R.id.order_layout_preferences);
         List<String> preferences_data = config.getPreferences();
+        schedule_preference = schedule.getPreferences();
 
-        for( int i = 0; i < preferences_data.size(); i++  ) {
+        for( int i = 0; i < preferences_data.size(); i++ ) {
             String preference = preferences_data.get(i);
 
             CheckBox preferenceCheckBox = new CheckBox(getApplicationContext());
             preferenceCheckBox.setText(preference);
+            if(schedule_preference.contains(preference)) {
+                preferenceCheckBox.setChecked(true);
+            }
+            preferenceCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        schedule_preference.add(buttonView.getText().toString());
+                    }else{
+                        schedule_preference.remove(buttonView.getText().toString());
+                    }
+                }
+            });
             preferences.addView(preferenceCheckBox);
         }
 
@@ -151,9 +202,9 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
         scheduled_date.set(Calendar.YEAR, year);
         scheduled_date.set(Calendar.MONTH, monthOfYear);
         scheduled_date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        schedule.setCalendar_start(scheduled_date);
         sDate = true;
 
-        DateFormat df = new SimpleDateFormat(config.getDate_format());
         buttonDate.setText(df.format(scheduled_date.getTime()));
     }
 
@@ -162,6 +213,7 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
         /* Save Time from timepicker */
         scheduled_date.set(Calendar.HOUR, hour);
         scheduled_date.set(Calendar.MINUTE, minute);
+        schedule.setCalendar_start(scheduled_date);
         sTime = true;
 
         String bText = String.format("%02d",hour) + ":" + String.format("%02d",minute);
@@ -192,7 +244,7 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
     private boolean checkInputs() {
         /* Check all inputs */
         if( sDate && sTime && sLocation && sLanguage && sTimespan ) {
-            schedule.setCalendar_start(scheduled_date);
+            schedule.setPreferences(schedule_preference);
             return true;
         }
         if (!sDate) { /* styling error in date */ }

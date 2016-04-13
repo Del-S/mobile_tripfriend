@@ -44,9 +44,10 @@ public class LoadConfiguration {
         lang.add("German");
 
         Calendar schedule = Calendar.getInstance();
+        friends = new ArrayList<Friend>();
 
         for( int i = 0; i < 5; i++ ) {
-            Friend f = new Friend(i,"Name"+i,"Image"+i,"Desc"+i, schedule, lang);
+            Friend f = new Friend(i,"Name"+i,"Image"+i,"Desc"+i, schedule, lang, new Date());
             friends.add(f);
         }
         return friends;

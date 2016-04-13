@@ -1,6 +1,8 @@
 package com.tripfriend.front;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Schedule {
 
@@ -13,8 +15,12 @@ public class Schedule {
     private int id, location, language, time_span, id_friend, group;
     private Calendar calendar_start;
     private String name, surname, email, phone_number;
+    private List<String> preferences;
 
-    public Schedule(int id, int location, int language, int time_span, int id_friend, int group, Calendar calendar_start, String name, String surname, String email, String phone_number) {
+    private static final Schedule schedule = new Schedule();
+    public static Schedule getInstance() { return schedule; }
+
+    public Schedule(int id, int location, int language, int time_span, int id_friend, int group, Calendar calendar_start, String name, String surname, String email, String phone_number, List<String> preferences) {
         this.id = id;
         this.location = location;
         this.language = language;
@@ -26,9 +32,14 @@ public class Schedule {
         this.surname = surname;
         this.email = email;
         this.phone_number = phone_number;
+        this.preferences = preferences;
     }
 
     public Schedule(){
+        this.preferences = new ArrayList<String>();
+        this.location = -1;
+        this.language = -1;
+        this.time_span = -1;
     }
 
     public int getId() {
@@ -117,5 +128,13 @@ public class Schedule {
 
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
+    }
+
+    public List<String> getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(List<String> preferences) {
+        this.preferences = preferences;
     }
 }

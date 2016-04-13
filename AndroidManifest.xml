@@ -21,11 +21,14 @@
         <activity
             android:name=".front.order.OrderActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".front.order.OrderPickFriendActivity"
-            android:parentActivityName=".front.order.OrderActivity"></activity>
+        <activity
+            android:name=".front.order.OrderPickFriendActivity"
+            android:parentActivityName=".front.order.OrderActivity" />
         <activity
             android:name=".front.list.ListScheduleActivity"
             android:parentActivityName=".MainActivity" />
+        <activity android:name=".front.order.OrderUserInfoActivity" />
+        <activity android:name=".front.order.OrderCompleteActivity"></activity>
     </application>
 
 </manifest>

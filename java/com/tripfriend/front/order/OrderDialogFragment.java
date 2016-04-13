@@ -105,7 +105,8 @@ public class OrderDialogFragment extends DialogFragment implements DatePickerDia
         int hour = c.get(Calendar.HOUR);
         int minute = c.get(Calendar.MINUTE);
 
-        return new TimePickerDialog(getActivity(), this, hour, minute, true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), TimePickerDialog.THEME_DEVICE_DEFAULT_DARK , this, hour, minute, true);
+        return timePickerDialog;
     }
 
     public Dialog createPickerDialog(String title, CharSequence[] cs, int position, final int type) {
