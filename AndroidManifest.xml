@@ -28,7 +28,7 @@
             android:name=".front.list.ListScheduleActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".front.order.OrderUserInfoActivity" />
-        <activity android:name=".front.order.OrderCompleteActivity"></activity>
+        <activity android:name=".front.order.OrderCompleteActivity" />
     </application>
 
 </manifest>

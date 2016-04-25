@@ -1,15 +1,17 @@
 package com.tripfriend.configuration;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Configuration {
-    private List locations, languages, time_spans, preferences;
+    private HashMap<Integer, String> locations, languages, time_spans;
+    private List preferences;
     private String start_time, end_time, date_format;
 
     public Configuration() {
     }
 
-    public Configuration(List locations, List languages, List time_spans, List preferences, String start_time, String end_time) {
+    public Configuration(HashMap<Integer, String> locations, HashMap<Integer, String> languages, HashMap<Integer, String> time_spans, List preferences, String start_time, String end_time) {
         this.locations = locations;
         this.languages = languages;
         this.time_spans = time_spans;
@@ -18,27 +20,27 @@ public class Configuration {
         this.end_time = end_time;
     }
 
-    public List getLocations() {
+    public HashMap<Integer, String> getLocations() {
         return locations;
     }
 
-    public void setLocations(List locations) {
+    public void setLocations(HashMap<Integer, String> locations) {
         this.locations = locations;
     }
 
-    public List getLanguages() {
+    public HashMap<Integer, String> getLanguages() {
         return languages;
     }
 
-    public void setLanguages(List languages) {
+    public void setLanguages(HashMap<Integer, String> languages) {
         this.languages = languages;
     }
 
-    public List getTime_spans() {
+    public HashMap<Integer, String> getTime_spans() {
         return time_spans;
     }
 
-    public void setTime_spans(List time_spans) {
+    public void setTime_spans(HashMap<Integer, String> time_spans) {
         this.time_spans = time_spans;
     }
 

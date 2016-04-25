@@ -1,5 +1,6 @@
 package com.tripfriend.front.order;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,19 +19,22 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class OrderPickFriendActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class OrderPickFriendActivity extends Activity implements AdapterView.OnItemClickListener {
 
     List<Friend> friends;
     ListView listViewFriends;
     Schedule schedule;
+    LoadConfiguration loadConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_pick_friend);
 
+        loadConfiguration = LoadConfiguration.getInstance();
+
         schedule = Schedule.getInstance();
-        friends = LoadConfiguration.getFriends();
+        friends = loadConfiguration.getFriends();
         listViewFriends = (ListView) findViewById(R.id.orderF_friends);
 
         /* Add adapter to friendView */
@@ -41,14 +45,9 @@ public class OrderPickFriendActivity extends AppCompatActivity implements Adapte
     }
 
     private List<Friend> getAvailableFriends() {
-        List<Friend> allFriends = LoadConfiguration.getFriends();
-        List<Friend> availableFriends = new ArrayList<Friend>();
-        for(int i = 0; allFriends.size() > i; i++) {
-            Calendar startfriendCalendar = schedule.getCalendar_start();
+        // This will be pointed to the internet api
 
-            allFriends
-        }
-        return availableFriends;
+        return new ArrayList<Friend>();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.tripfriend.front.order;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ import android.widget.Toast;
 
 import com.tripfriend.R;
 
-public class OrderUserInfoActivity extends AppCompatActivity {
+public class OrderUserInfoActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

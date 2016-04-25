@@ -15,13 +15,17 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class OrderDialogFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private String tag;
     private OnCompleteODFListener completeListener;
     final Calendar c = Calendar.getInstance();
+    HashMap<Integer, String> list;
+    Integer[] keySet;
 
     public interface OnCompleteODFListener {
         void onLocationPicked(int location);
@@ -35,7 +39,6 @@ public class OrderDialogFragment extends DialogFragment implements DatePickerDia
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-        List<String> list;
         CharSequence[] cs = new CharSequence[0];
         int position;
 
@@ -45,26 +48,32 @@ public class OrderDialogFragment extends DialogFragment implements DatePickerDia
             case "timePicker":
                 return createTimePickerDialog();
             case "locationPicker":
-                list = (List<String>) bundle.get("locations");
+                list = (HashMap<Integer, String>) bundle.get("locations");
                 position = (int) bundle.get("locations_selected");
                 if( list != null ) {
-                    cs = list.toArray(new CharSequence[list.size()]);
+                    keySet = list.keySet().toArray(new Integer[list.size()]);
+                    cs = list.values().toArray(new CharSequence[list.size()]);
+                    if( position != -1 ) position = getKeyIndex(position);
                 }
 
                 return createPickerDialog("Select Location", cs, position, 0);
             case "languagePicker":
-                list = (List<String>) bundle.get("languages");
+                list = (HashMap<Integer, String>) bundle.get("languages");
                 position = (int) bundle.get("languages_selected");
                 if( list != null ) {
-                    cs = list.toArray(new CharSequence[list.size()]);
+                    keySet = list.keySet().toArray(new Integer[list.size()]);
+                    cs = list.values().toArray(new CharSequence[list.size()]);
+                    if( position != -1 ) position = getKeyIndex(position);
                 }
 
                 return createPickerDialog("Select Language", cs, position, 1);
             case "timespanPicker":
-                list = (List<String>) bundle.get("timespans");
+                list = (HashMap<Integer, String>) bundle.get("timespans");
                 position = (int) bundle.get("timespans_selected");
                 if( list != null ) {
-                    cs = list.toArray(new CharSequence[list.size()]);
+                    keySet = list.keySet().toArray(new Integer[list.size()]);
+                    cs = list.values().toArray(new CharSequence[list.size()]);
+                    if( position != -1 ) position = getKeyIndex(position);
                 }
 
                 return createPickerDialog("Select Location", cs, position, 2);
@@ -90,13 +99,22 @@ public class OrderDialogFragment extends DialogFragment implements DatePickerDia
         super.show(manager, tag);
     }
 
+    private int getKeyIndex(int position) {
+        int index = 0;
+        for(int key : keySet) {
+            if(position == key) { return index; }
+            ++index;
+        }
+        return -1;
+    }
+
     public Dialog createDatePickerDialog() {
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), this, year, month, day);
-        datePickerDialog.getDatePicker().setMinDate(new Date().getTime());
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
         return datePickerDialog;
     }
@@ -105,7 +123,7 @@ public class OrderDialogFragment extends DialogFragment implements DatePickerDia
         int hour = c.get(Calendar.HOUR);
         int minute = c.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), TimePickerDialog.THEME_DEVICE_DEFAULT_DARK , this, hour, minute, true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), this, hour, minute, true);
         return timePickerDialog;
     }
 
@@ -125,13 +143,13 @@ public class OrderDialogFragment extends DialogFragment implements DatePickerDia
                 if(completeListener != null) {
                     switch (type) {
                         case 0:
-                            completeListener.onLocationPicked(which);
+                            completeListener.onLocationPicked(keySet[which]);
                             break;
                         case 1:
-                            completeListener.onLanguagePicked(which);
+                            completeListener.onLanguagePicked(keySet[which]);
                             break;
                         case 2:
-                            completeListener.onTimespanPicked(which);
+                            completeListener.onTimespanPicked(keySet[which]);
                             break;
                         default:
                             break;

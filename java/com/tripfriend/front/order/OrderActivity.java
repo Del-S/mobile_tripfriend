@@ -1,6 +1,8 @@
 package com.tripfriend.front.order;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,13 +19,17 @@ import com.tripfriend.configuration.Configuration;
 import com.tripfriend.configuration.LoadConfiguration;
 import com.tripfriend.front.Schedule;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.List;
 
-public class OrderActivity extends AppCompatActivity implements OrderDialogFragment.OnCompleteODFListener {
+public class OrderActivity extends FragmentActivity implements OrderDialogFragment.OnCompleteODFListener {
 
     Configuration config;
     Schedule schedule;
@@ -35,13 +41,21 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
     Boolean sDate, sTime, sLocation, sLanguage, sTimespan;
     List<String> schedule_preference;
     DateFormat df;
+    LoadConfiguration loadConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
-        config = LoadConfiguration.getConfig();
+        loadConfiguration = LoadConfiguration.getInstance();
+        try {
+            config = loadConfiguration.getConfig();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         schedule = Schedule.getInstance();
         scheduled_date = schedule.getCalendar_start();
         dialogFragment = new OrderDialogFragment();
@@ -97,7 +111,7 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putStringArrayList("locations", new ArrayList<String>(config.getLocations()));
+                bundle.putSerializable("locations", config.getLocations());
                 bundle.putInt("locations_selected", schedule.getLocation());
                 dialogFragment.setArguments(bundle);
 
@@ -115,7 +129,7 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putStringArrayList("languages", new ArrayList<String>(config.getLanguages()));
+                bundle.putSerializable("languages", config.getLanguages());
                 bundle.putInt("languages_selected", schedule.getLanguage());
                 dialogFragment.setArguments(bundle);
 
@@ -133,7 +147,7 @@ public class OrderActivity extends AppCompatActivity implements OrderDialogFragm
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putStringArrayList("timespans", new ArrayList<String>(config.getTime_spans()));
+                bundle.putSerializable("timespans", config.getTime_spans());
                 bundle.putInt("timespans_selected", schedule.getTime_span());
                 dialogFragment.setArguments(bundle);
 
