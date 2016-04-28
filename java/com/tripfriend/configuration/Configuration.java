@@ -1,5 +1,7 @@
 package com.tripfriend.configuration;
 
+import com.tripfriend.front.Friend;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,17 +9,14 @@ public class Configuration {
     private HashMap<Integer, String> locations, languages, time_spans;
     private List preferences;
     private String start_time, end_time, date_format;
+    private List<Friend> friends;
+    private boolean isSet;
+
+    private static final Configuration config = new Configuration();
+    public static Configuration getInstance() { return config; }
 
     public Configuration() {
-    }
-
-    public Configuration(HashMap<Integer, String> locations, HashMap<Integer, String> languages, HashMap<Integer, String> time_spans, List preferences, String start_time, String end_time) {
-        this.locations = locations;
-        this.languages = languages;
-        this.time_spans = time_spans;
-        this.preferences = preferences;
-        this.start_time = start_time;
-        this.end_time = end_time;
+        this.isSet = false;
     }
 
     public HashMap<Integer, String> getLocations() {
@@ -74,5 +73,21 @@ public class Configuration {
 
     public void setPreferences(List preferences) {
         this.preferences = preferences;
+    }
+
+    public List<Friend> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Friend> friends) {
+        this.friends = friends;
+    }
+
+    public boolean isSet() {
+        return isSet;
+    }
+
+    public void setIsSet(boolean isSet) {
+        this.isSet = isSet;
     }
 }

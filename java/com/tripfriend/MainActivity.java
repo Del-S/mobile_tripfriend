@@ -31,20 +31,20 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        loadConfiguration = LoadConfiguration.getInstance();
+        config = Configuration.getInstance();
 
         // Todo: wait fot his async task to finish - or do on finish enable ordering
-        if(config == null) {
+        if(config.isSet() == false) {
             new AsyncTask<String, Void, Configuration>() {
                 @Override
                 protected Configuration doInBackground(String... params) {
                     try {
-                        loadConfiguration.loadConfiguration();
-                        config = loadConfiguration.getConfig();
+                        LoadConfiguration.getInstance(MainActivity.this).loadConfiguration();
 
                         Format dateFormat = DateFormat.getDateFormat(getApplicationContext());
                         String pattern = ((SimpleDateFormat) dateFormat).toLocalizedPattern();
 
+                        config = Configuration.getInstance();
                         config.setDate_format(pattern);
                     } catch (IOException e) {
                         e.printStackTrace();

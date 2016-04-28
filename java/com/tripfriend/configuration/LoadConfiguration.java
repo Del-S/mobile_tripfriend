@@ -1,11 +1,16 @@
 package com.tripfriend.configuration;
 
+import android.app.IntentService;
+import android.content.Context;
+import android.content.Intent;
+
 import com.tripfriend.front.Friend;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -18,18 +23,19 @@ import java.util.List;
 import java.util.Map;
 
 public class LoadConfiguration {
-    private Configuration config;
-    private List<Friend> friends;
-
     private final String config_url = "http://10.0.2.2/tripfriend/tf-api/";
     //private final String config_url = "http://10.0.2.2/weather/";
     private final String friend_url = "http://10.0.2.2/tripfriend/tf-api/friends/";
     private final String friends_available_url = "http://10.0.2.2/tripfriend/tf-api/friends-available/";
     private final String schedule = "http://10.0.2.2/tripfriend/tf-api/schedule/";
     private final String schedule_create = "http://10.0.2.2/tripfriend/tf-api/schedule/create/";
+    private Context context;
 
     private static final LoadConfiguration loadConfiguration = new LoadConfiguration();
-    public static LoadConfiguration getInstance() { return loadConfiguration; }
+    public static LoadConfiguration getInstance(Context context) {
+        loadConfiguration.setContext(context);
+        return loadConfiguration;
+    }
 
     public void loadConfiguration() throws IOException, JSONException {
         JSONObject jsonObject = getJsonObject(config_url);
@@ -51,8 +57,16 @@ public class LoadConfiguration {
         String start_time = configObject.getString("start_time");
         String end_time = configObject.getString("end_time");
 
-        config = new Configuration(locations, languages, timespans, preferences, start_time, end_time);
-        //loadFriends();
+
+        Configuration config = Configuration.getInstance();
+        config.setLocations(locations);
+        config.setLanguages(languages);
+        config.setTime_spans(timespans);
+        config.setPreferences(preferences);
+        config.setStart_time(start_time);
+        config.setEnd_time(end_time);
+        config.setFriends(loadFriends());
+        config.setIsSet(true);
     }
 
     private HashMap<Integer, String> parseSingleArray(JSONObject jsonObject) throws IOException, JSONException {
@@ -79,27 +93,71 @@ public class LoadConfiguration {
         return returnArray;
     }
 
-    private void loadFriends() throws IOException, JSONException {
-        JSONArray friendsArray = getJsonObject(config_url).getJSONArray("friends");
-        for(int i = 0; friendsArray.length() >= i; i++ ) {
-            JSONObject friendObject = friendsArray.getJSONObject(i);
+    private List<Friend> loadFriends() throws IOException, JSONException {
+        List<Friend> friends = new ArrayList<>();
+
+        JSONObject jsonObject = getJsonObject(config_url);
+
+        JSONObject friendsObject = jsonObject.getJSONObject("friends");
+        JSONArray names = friendsObject.names();
+        for(int i = 0; friendsObject.length() > i; i++ ) {
+            String name = (String) names.get(i);
+            JSONObject friendObject = friendsObject.getJSONObject(name);
             String thumbnail_url = friendObject.getString("image");
             String thumbnail = downloadFile(thumbnail_url);
 
-            //List<String> languages = parseSingleArray( friendObject.getJSONArray("languages") );
+            List<String> languages_url = parseSingleArrayNoID(friendObject.getJSONArray("languages"));
+            String[] languages_url_parsed = languages_url.get(0).split(",");
+            List<String> languages = downloadFiles(languages_url_parsed);
 
-            /*friends.add(new Friend(friendObject.getInt("ID"),
+            friends.add(new Friend(friendObject.getInt("id"),
                     friendObject.getString("name"),
                     thumbnail,
                     "",
                     languages,
                     new Date()
-            ));*/
+            ));
         }
+        return friends;
+    }
+
+    private String[] getAvailableFriends() throws IOException, JSONException {
+        String[] friends = new String[2];
+        // TODO: has to send data to api !!!
+        return friends;
+    }
+
+    private List<String> downloadFiles(String[] downloadUrls) {
+        List<String> downloads = new ArrayList<>();
+        for(String downloadUrl : downloadUrls) {
+            String downloaded_file = downloadFile( downloadUrl );
+            downloads.add(downloaded_file);
+        }
+        return downloads;
     }
 
     private String downloadFile(String downloadUrl) {
-        return "";
+        // Alter url from localhost to 10.0.2.2 for localhost only
+        downloadUrl = downloadUrl.replace("localhost", "10.0.2.2");
+
+        File dir = context.getFilesDir();
+        boolean download = true;
+        String filename = downloadUrl;
+        filename = filename.substring(filename.lastIndexOf("/") + 1);
+        for(File file : dir.listFiles()) {
+            if( file.getName().equals(filename) ) {
+                download = false;
+                break;
+            }
+        }
+
+        if(download) {
+            Intent intent = new Intent(context, com.tripfriend.configuration.DownloadFileService.class);
+            intent.putExtra("download_url", downloadUrl);
+
+            context.startService(intent);
+        }
+        return filename;
     }
 
     /*public static void loadConfiguration() {
@@ -124,14 +182,7 @@ public class LoadConfiguration {
         config = new Configuration(locations, languages, timespans, preferences, start_time, end_time);
     }*/
 
-    public Configuration getConfig() throws IOException, JSONException {
-        if(config == null) {
-            loadConfiguration();
-        }
-        return config;
-    }
-
-    public List<Friend> getFriends() {
+    /*public List<Friend> getFriends() {
         List<String> lang = new ArrayList<String>();
         lang.add("Czech");
         lang.add("English");
@@ -145,9 +196,9 @@ public class LoadConfiguration {
             friends.add(f);
         }
         return friends;
-    }
+    }*/
 
-    public JSONObject getJsonObject(String urlString) throws IOException, JSONException {
+    private JSONObject getJsonObject(String urlString) throws IOException, JSONException {
         URL url = new URL(urlString);
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -163,5 +214,9 @@ public class LoadConfiguration {
         }
 
         return new JSONObject(jsonResult.toString());
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

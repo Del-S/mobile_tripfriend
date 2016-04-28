@@ -1,4 +1,4 @@
-package com.cviceni.cv7;
+package com.tripfriend.configuration;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -8,14 +8,13 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
 public class DownloadFileService extends IntentService {
-
-    /* Todo: Revision !! */
 
     public DownloadFileService(String name) {
         super(name);
@@ -28,33 +27,45 @@ public class DownloadFileService extends IntentService {
     // Download files
     @Override
     protected void onHandleIntent(Intent intent) {
+        File dir = getFilesDir();
         String download_url = intent.getStringExtra("download_url");
 
-        try {
-            URL url = new URL(download_url);
-            URLConnection connection = url.openConnection();
-            connection.connect();
-
-            String filename = url.getFile();
-            filename = filename.substring(filename.lastIndexOf("/") + 1);
-
-            InputStream inputStream = new BufferedInputStream(connection.getInputStream());
-            OutputStream outputStream = openFileOutput(filename, MODE_PRIVATE);
-
-            byte data[] = new byte[1024];
-            int count;
-            while ((count = inputStream.read(data)) != -1) {
-                outputStream.write(data, 0, count);
-            }
-            outputStream.close();
-            inputStream.close();
-
-            showNotification(true, "Staženo");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            showNotification(false, e.getMessage());
+        boolean download = true;
+        String filename = download_url;
+        filename = filename.substring(filename.lastIndexOf("/") + 1);
+        for(File file : dir.listFiles()) {
+            if( file.getName().equals(filename) ) download = false;
         }
+
+        if(download) {
+            try {
+                URL url = new URL(download_url);
+                URLConnection connection = url.openConnection();
+                connection.connect();
+
+                String filename_download = url.getFile();
+                filename = filename_download.substring(filename_download.lastIndexOf("/") + 1);
+
+                InputStream inputStream = new BufferedInputStream(connection.getInputStream());
+                OutputStream outputStream = openFileOutput(filename, MODE_PRIVATE);
+
+                byte data[] = new byte[1024];
+                int count;
+                while ((count = inputStream.read(data)) != -1) {
+                    outputStream.write(data, 0, count);
+                }
+                outputStream.close();
+                inputStream.close();
+
+                showNotification(true, "Staženo");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                showNotification(false, e.getMessage());
+                showNotification(false, download_url);
+            }
+        }
+        this.stopSelf();
     }
 
     private void showNotification(boolean success, String title) {

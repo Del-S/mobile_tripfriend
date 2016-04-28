@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.tripfriend.R;
+import com.tripfriend.configuration.Configuration;
 import com.tripfriend.configuration.LoadConfiguration;
 import com.tripfriend.front.Friend;
 import com.tripfriend.front.Schedule;
@@ -24,17 +25,16 @@ public class OrderPickFriendActivity extends Activity implements AdapterView.OnI
     List<Friend> friends;
     ListView listViewFriends;
     Schedule schedule;
-    LoadConfiguration loadConfiguration;
+    Configuration config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_pick_friend);
 
-        loadConfiguration = LoadConfiguration.getInstance();
-
+        config = Configuration.getInstance();
         schedule = Schedule.getInstance();
-        friends = loadConfiguration.getFriends();
+        friends = config.getFriends();
         listViewFriends = (ListView) findViewById(R.id.orderF_friends);
 
         /* Add adapter to friendView */
@@ -47,7 +47,8 @@ public class OrderPickFriendActivity extends Activity implements AdapterView.OnI
     private List<Friend> getAvailableFriends() {
         // This will be pointed to the internet api
 
-        return new ArrayList<Friend>();
+        return config.getFriends();
+        //return new ArrayList<Friend>();
     }
 
     @Override

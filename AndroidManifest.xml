@@ -29,6 +29,11 @@
             android:parentActivityName=".MainActivity" />
         <activity android:name=".front.order.OrderUserInfoActivity" />
         <activity android:name=".front.order.OrderCompleteActivity" />
+
+        <!-- Declaring Service in Manifest -->
+        <service
+            android:name=".configuration.DownloadFileService"
+            android:exported="false" />
     </application>
 
 </manifest>
