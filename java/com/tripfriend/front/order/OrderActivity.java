@@ -19,7 +19,9 @@ import com.tripfriend.configuration.Configuration;
 import com.tripfriend.configuration.LoadConfiguration;
 import com.tripfriend.front.Schedule;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -53,6 +55,7 @@ public class OrderActivity extends FragmentActivity implements OrderDialogFragme
         scheduled_date = schedule.getCalendar_start();
         dialogFragment = new OrderDialogFragment();
         df = new SimpleDateFormat(config.getDate_format());
+        loadConfiguration = LoadConfiguration.getInstance(OrderActivity.this);
 
         sDate = true;
         sTime = true;
@@ -84,13 +87,40 @@ public class OrderActivity extends FragmentActivity implements OrderDialogFragme
             @Override
             public void onClick(View v) {
                 if( checkInputs() ) {
-                    Intent intent = new Intent(OrderActivity.this, OrderPickFriendActivity.class);
-                    startActivity(intent);
+                    try {
+                        loadConfiguration.getAvailableFriends();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 } else {
                     Toast.makeText(OrderActivity.this, "Error you don't have all data filled (parametrize this)", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    public void completeActivity(JSONObject availableFriendsObject) {
+        try {
+            System.out.println(availableFriendsObject.toString());
+            JSONArray friendIDArray = availableFriendsObject.getJSONArray("available_friends");
+            List<String> availableFriends = loadConfiguration.parseSingleArrayNoID( friendIDArray );
+
+            if(availableFriends != null) {
+                schedule.setAvailableFriends(availableFriends);
+
+                Intent intent = new Intent(OrderActivity.this, OrderPickFriendActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(OrderActivity.this, "No friends available for this schedule. (parametrize this)", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadSelects() {

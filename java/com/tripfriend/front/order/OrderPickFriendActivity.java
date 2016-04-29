@@ -16,6 +16,9 @@ import com.tripfriend.configuration.LoadConfiguration;
 import com.tripfriend.front.Friend;
 import com.tripfriend.front.Schedule;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -32,23 +35,31 @@ public class OrderPickFriendActivity extends Activity implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_pick_friend);
 
+
         config = Configuration.getInstance();
         schedule = Schedule.getInstance();
         friends = config.getFriends();
         listViewFriends = (ListView) findViewById(R.id.orderF_friends);
 
         /* Add adapter to friendView */
-        PickFriendAdapter friendAdapter = new PickFriendAdapter(this, R.layout.item_friend, getAvailableFriends());
+        List<Friend> availableFriends = getAvailableFriends();
+        PickFriendAdapter friendAdapter = new PickFriendAdapter(this, R.layout.item_friend, availableFriends);
         listViewFriends.setAdapter(friendAdapter);
         listViewFriends.setOnItemClickListener(this);
         friendAdapter.notifyDataSetChanged();
     }
 
     private List<Friend> getAvailableFriends() {
-        // This will be pointed to the internet api
+        List<Friend> friends = new ArrayList<>();
 
-        return config.getFriends();
-        //return new ArrayList<Friend>();
+        for(String idFriend : schedule.getAvailableFriends()) {
+            int id = Integer.valueOf(idFriend);
+            Friend f = config.getFriendByID(id);
+            if(f != null) {
+                friends.add(f);
+            }
+        }
+        return friends;
     }
 
     @Override

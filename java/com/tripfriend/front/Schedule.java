@@ -17,10 +17,12 @@ public class Schedule {
     private String name, surname, email, phone_number;
     private List<String> preferences;
 
+    private List<String> availableFriends;
+
     private static final Schedule schedule = new Schedule();
     public static Schedule getInstance() { return schedule; }
 
-    public Schedule(int id, int location, int language, int time_span, int id_friend, int group, Calendar calendar_start, String name, String surname, String email, String phone_number, List<String> preferences) {
+    public Schedule(int id, int location, int language, int time_span, int id_friend, int group, Calendar calendar_start, String name, String surname, String email, String phone_number, List<String> preferences, List<String> availableFriends) {
         this.id = id;
         this.location = location;
         this.language = language;
@@ -33,6 +35,7 @@ public class Schedule {
         this.email = email;
         this.phone_number = phone_number;
         this.preferences = preferences;
+        this.availableFriends = availableFriends;
     }
 
     public Schedule(){
@@ -136,5 +139,13 @@ public class Schedule {
 
     public void setPreferences(List<String> preferences) {
         this.preferences = preferences;
+    }
+
+    public List<String> getAvailableFriends() {
+        return availableFriends;
+    }
+
+    public void setAvailableFriends(List<String> availableFriends) {
+        this.availableFriends = availableFriends;
     }
 }

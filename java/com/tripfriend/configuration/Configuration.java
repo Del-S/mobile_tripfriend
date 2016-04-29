@@ -19,6 +19,13 @@ public class Configuration {
         this.isSet = false;
     }
 
+    public Friend getFriendByID(int idFriend) {
+        for( Friend f : friends ) {
+            if(f.getId() == idFriend) { return f; }
+        }
+        return null;
+    }
+
     public HashMap<Integer, String> getLocations() {
         return locations;
     }
