@@ -24,11 +24,16 @@
         <activity
             android:name=".front.order.OrderPickFriendActivity"
             android:parentActivityName=".front.order.OrderActivity" />
-        <activity
-            android:name=".front.list.ListScheduleActivity"
+        <activity android:name=".front.order.OrderUserInfoActivity"
+            android:parentActivityName=".front.order.OrderPickFriendActivity"/>
+        <activity android:name=".front.order.OrderCompleteActivity"
+            android:parentActivityName=".MainActivity"/>
+
+        <activity android:name=".front.list.ListScheduleActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".front.order.OrderUserInfoActivity" />
-        <activity android:name=".front.order.OrderCompleteActivity" />
+
+        <activity android:name=".front.about.AboutActivity"
+            android:parentActivityName=".MainActivity"></activity>
 
         <!-- Declaring Service in Manifest -->
         <service

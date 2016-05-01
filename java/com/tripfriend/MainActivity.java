@@ -3,17 +3,28 @@ package com.tripfriend;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tripfriend.configuration.Configuration;
 import com.tripfriend.configuration.LoadConfiguration;
+import com.tripfriend.front.about.AboutActivity;
 import com.tripfriend.front.order.OrderActivity;
 import com.tripfriend.front.list.ListScheduleActivity;
 
@@ -28,9 +39,8 @@ import java.text.SimpleDateFormat;
 
 public class MainActivity extends Activity {
 
-    LoadConfiguration loadConfiguration;
     Configuration config;
-    Button button_schedule;
+    Button button_schedule, button_view_schedules;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +48,24 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         config = Configuration.getInstance();
+
+        // Testing
+        ImageView imgSlider = new ImageView(MainActivity.this);
+        imgSlider.setMinimumHeight(300);
+        imgSlider.setScaleType(ImageView.ScaleType.FIT_XY);
+        imgSlider.setImageResource(R.drawable.panorama_of_prague_castle);
+
+        ImageSwitcher is = (ImageSwitcher) findViewById(R.id.main_imageSwitcher_slider);
+        is.addView(imgSlider);
+
+        TextView tw = new TextView(MainActivity.this);
+        tw.setText(getString(R.string.main_slider_content_1));
+        tw.setTextColor(getResources().getColor(R.color.colorWhite));
+        tw.setGravity(Gravity.CENTER);
+        TextSwitcher ts = (TextSwitcher) findViewById(R.id.main_textSwitcher_slider);
+        ts.addView(tw);
+
+
 
         button_schedule = (Button) findViewById(R.id.main_button_schedule);
         button_schedule.setEnabled(false);
@@ -49,7 +77,17 @@ public class MainActivity extends Activity {
             }
         });
 
-        Button button_view_schedules = (Button) findViewById(R.id.main_button_list_schedules);
+        Button button_about = (Button) findViewById(R.id.main_button_about);
+        button_about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        button_view_schedules = (Button) findViewById(R.id.main_button_list_schedules);
+        button_view_schedules.setEnabled(false);
         button_view_schedules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,5 +142,6 @@ public class MainActivity extends Activity {
 
     public void enableButtons() {
         button_schedule.setEnabled(true);
+        button_view_schedules.setEnabled(true);
     }
 }

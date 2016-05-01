@@ -4,10 +4,10 @@
 
     <!-- Main Activity -->
     <string name="main_button_schedule">Order TripFriend</string>
+    <string name="main_button_about">About TripFriend</string>
     <string name="main_button_list_schedules">View your orders</string>
 
-    <!-- List schedule -->
-    <string name="list_schedule_heading">Your orders</string>
+    <string name="main_slider_content_1">Are you planning a trip to Prague and want to see not just the regular tourist destinations but the various local hotspots? We’ll help you with make your trip unforgetable!</string>
 
     <!-- Order -->
     <string name="order_heading">1/3 Order info</string>
@@ -45,10 +45,22 @@
     <string name="orderC_finish_order">Finish order</string>
 
     <!-- List of schedules -->
-    <string name="list_schedule">Your schedules</string>
+    <string name="list_schedule_heading">Your schedules</string>
     <string name="list_schedule_location">Location:</string>
     <string name="list_schedule_language">Language:</string>
     <string name="list_schedule_date_time">Date:</string>
     <string name="list_schedule_pickup_location">Pickup location:</string>
+
+    <!-- About -->
+    <string name="about_heading">About TripFriend</string>
+    <string name="about_what_we_offer">WHAT DO WE OFFER?</string>
+    <string name="about_what">What?</string>
+    <string name="about_what_content">Have you just arrived in a new city and need help? Do you know the local vibe – the mentality, language, tram schedule? Are you time limited, but still want to see the most amazing sights, interesting museums, beautiful parks, or the wildest clubs? Would you also like to keep your trip cheap? We are here to help you!</string>
+    <string name="about_who">Who?</string>
+    <string name="about_who_content">TripFriend makes your visit of Prague easier and more pleasant. We will provide you with a Friend who processes an excellent knowledge of the city and who will be there to satisfy any wish or expectation connected to your visit to this wonderful city. All of course, in your native language. We make your trip easier.</string>
+    <string name="about_how">How?</string>
+    <string name="about_how_content">You will choose, where and when will you be picked up by your TripFriend. You will choose if you want to spend your time exploring historical places, or visiting parks, local museums and the most modern shopping centres etc. You can expect TripFriend to recommend an extraordinary restaurant, good exchange, an energetic club and much more.</string>
+
+    <string name="about_our_team">Our team</string>
 
 </resources>

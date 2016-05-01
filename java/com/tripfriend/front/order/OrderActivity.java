@@ -105,10 +105,11 @@ public class OrderActivity extends FragmentActivity implements OrderDialogFragme
 
     public void completeActivity(JSONObject availableFriendsObject) {
         try {
+            System.out.println(availableFriendsObject);
             JSONArray friendIDArray = availableFriendsObject.getJSONArray("available_friends");
             List<String> availableFriends = loadConfiguration.parseSingleArrayNoID( friendIDArray );
 
-            if(availableFriends != null) {
+            if(!availableFriends.equals("")) {
                 schedule.setAvailableFriends(availableFriends);
 
                 Intent intent = new Intent(OrderActivity.this, OrderPickFriendActivity.class);
@@ -215,6 +216,7 @@ public class OrderActivity extends FragmentActivity implements OrderDialogFragme
 
             CheckBox preferenceCheckBox = new CheckBox(getApplicationContext());
             preferenceCheckBox.setText(preference);
+            preferenceCheckBox.setTextColor(getResources().getColor(R.color.colorBlack));
             if(schedule_preference.contains(preference)) {
                 preferenceCheckBox.setChecked(true);
             }

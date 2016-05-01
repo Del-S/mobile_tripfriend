@@ -5,16 +5,55 @@
     android:layout_height="match_parent"
     tools:context="com.tripfriend.MainActivity">
 
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageSwitcher
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main_imageSwitcher_slider"
+            android:animateFirstView="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+        <TextSwitcher
+            android:id="@+id/main_textSwitcher_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#99000000"
+            android:layout_margin="20dp"
+            android:padding="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/main_button_schedule"
         android:id="@+id/main_button_schedule"
-        android:layout_marginBottom="123dp"
+        android:layout_marginBottom="150dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:clickable="false"
         android:enabled="false" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_button_about"
+        android:id="@+id/main_button_about"
+        android:layout_marginTop="52dp"
+        android:layout_below="@+id/main_button_schedule"
+        android:layout_alignTop="@+id/main_button_schedule"
+        android:layout_alignLeft="@+id/main_button_schedule"
+        android:layout_alignStart="@+id/main_button_schedule" />
 
     <Button
         android:layout_width="wrap_content"
@@ -22,9 +61,10 @@
         android:text="@string/main_button_list_schedules"
         android:id="@+id/main_button_list_schedules"
         android:layout_marginTop="52dp"
-        android:layout_below="@+id/main_button_schedule"
-        android:layout_alignTop="@+id/main_button_schedule"
-        android:layout_alignLeft="@+id/main_button_schedule"
-        android:layout_alignStart="@+id/main_button_schedule" />
+        android:layout_below="@+id/main_button_about"
+        android:layout_alignTop="@+id/main_button_about"
+        android:layout_alignLeft="@+id/main_button_about"
+        android:layout_alignStart="@+id/main_button_about"
+        android:enabled="false" />
 
 </RelativeLayout>
