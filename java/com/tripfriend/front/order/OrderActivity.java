@@ -94,7 +94,6 @@ public class OrderActivity extends FragmentActivity implements OrderDialogFragme
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 } else {
                     Toast.makeText(OrderActivity.this, "Error you don't have all data filled (parametrize this)", Toast.LENGTH_SHORT).show();
                 }
@@ -104,7 +103,6 @@ public class OrderActivity extends FragmentActivity implements OrderDialogFragme
 
     public void completeActivity(JSONObject availableFriendsObject) {
         try {
-            System.out.println(availableFriendsObject.toString());
             JSONArray friendIDArray = availableFriendsObject.getJSONArray("available_friends");
             List<String> availableFriends = loadConfiguration.parseSingleArrayNoID( friendIDArray );
 

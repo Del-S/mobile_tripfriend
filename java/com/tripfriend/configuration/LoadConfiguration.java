@@ -147,8 +147,6 @@ public class LoadConfiguration {
         int minutes = c.get(Calendar.MINUTE);
         int time_minutes = (hour*60) + minutes;
 
-        System.out.println(time_minutes);
-
         JSONObject jsonSend = new JSONObject();
         jsonSend.put("location_id", schedule.getLocation());
         jsonSend.put("service_id", schedule.getLanguage());
@@ -157,6 +155,47 @@ public class LoadConfiguration {
         jsonSend.put("timespan", schedule.getTime_span());
 
         apiService.sendPost(0, friends_available_url, jsonSend);
+    }
+
+    public void completeOrder() throws IOException, JSONException {
+        ApiService apiService = new ApiService(context);
+
+        Schedule schedule = Schedule.getInstance();
+
+        Calendar c = schedule.getCalendar_start();
+        String date = getDateTime(c.getTime());
+
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minutes = c.get(Calendar.MINUTE);
+        int time_minutes = (hour*60) + minutes;
+
+        String preferences = "";
+        for( String pref : schedule.getPreferences() ) {
+            preferences += pref + ",";
+        }
+        if(!preferences.equals("")) {
+            preferences = preferences.substring(0, preferences.length() - 1);
+        }
+
+        JSONObject jsonSend = new JSONObject();
+        jsonSend.put("location_id", schedule.getLocation());
+        jsonSend.put("service_id", schedule.getLanguage());
+        jsonSend.put("staff_id", schedule.getId_friend());
+        jsonSend.put("date", date);
+        jsonSend.put("time", time_minutes);
+        jsonSend.put("timespan", schedule.getTime_span());
+        jsonSend.put("preferences", preferences);
+
+        jsonSend.put("pickup_location", schedule.getPickup_location());
+        jsonSend.put("notes", schedule.getNotes());
+
+        jsonSend.put("name", schedule.getName());
+        jsonSend.put("surname", schedule.getSurname());
+        jsonSend.put("email", schedule.getEmail());
+        jsonSend.put("phone", schedule.getPhone_number());
+        jsonSend.put("group", schedule.getGroup());
+
+        apiService.sendPost(1, schedule_create_url, jsonSend);
     }
 
     private String getDateTime(Date date) {

@@ -31,6 +31,7 @@
     <string name="orderU_phone">Phone number</string>
     <string name="orderU_group">Group</string>
     <string name="orderU_finish">Complete registration</string>
-
+    <string name="orderU_pickup_location">Pickup location (Prague airport, Charles bridge, …)</string>
+    <string name="orderU_notes">Notes</string>
 
 </resources>

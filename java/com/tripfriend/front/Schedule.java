@@ -14,7 +14,7 @@ public class Schedule {
 
     private int id, location, language, time_span, id_friend, group;
     private Calendar calendar_start;
-    private String name, surname, email, phone_number;
+    private String name, surname, email, phone_number, pickup_location, notes;
     private List<String> preferences;
 
     private List<String> availableFriends;
@@ -22,7 +22,7 @@ public class Schedule {
     private static final Schedule schedule = new Schedule();
     public static Schedule getInstance() { return schedule; }
 
-    public Schedule(int id, int location, int language, int time_span, int id_friend, int group, Calendar calendar_start, String name, String surname, String email, String phone_number, List<String> preferences, List<String> availableFriends) {
+    public Schedule(int id, int location, int language, int time_span, int id_friend, int group, Calendar calendar_start, String name, String surname, String email, String phone_number, String pickup_location, String notes, List<String> preferences, List<String> availableFriends) {
         this.id = id;
         this.location = location;
         this.language = language;
@@ -36,6 +36,8 @@ public class Schedule {
         this.phone_number = phone_number;
         this.preferences = preferences;
         this.availableFriends = availableFriends;
+        this.pickup_location = pickup_location;
+        this.notes = notes;
     }
 
     public Schedule(){
@@ -131,6 +133,22 @@ public class Schedule {
 
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
+    }
+
+    public String getPickup_location() {
+        return pickup_location;
+    }
+
+    public void setPickup_location(String pickup_location) {
+        this.pickup_location = pickup_location;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public List<String> getPreferences() {

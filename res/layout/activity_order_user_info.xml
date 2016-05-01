@@ -64,11 +64,34 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:hint="@string/orderU_pickup_location"
+        android:ems="10"
+        android:id="@+id/orderU_pickup_location"
+        android:layout_below="@+id/orderU_group"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:hint="@string/orderU_notes"
+        android:ems="10"
+        android:id="@+id/orderU_notes"
+        android:layout_below="@+id/orderU_pickup_location"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/orderU_finish"
         android:id="@+id/orderU_finish"
-        android:layout_below="@+id/orderU_group"
+        android:layout_below="@+id/orderU_notes"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

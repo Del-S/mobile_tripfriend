@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.tripfriend.front.order.OrderActivity;
+import com.tripfriend.front.order.OrderUserInfoActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -166,6 +167,10 @@ public class ApiService {
             case 0:
                 OrderActivity oa = (OrderActivity) context;
                 oa.completeActivity(result);
+                break;
+            case 1:
+                OrderUserInfoActivity ouia = (OrderUserInfoActivity) context;
+                ouia.completeActivity(result);
                 break;
         }
     }
