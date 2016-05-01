@@ -35,6 +35,7 @@ public class OrderPickFriendActivity extends Activity implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_pick_friend);
 
+        setTitle(getResources().getText(R.string.orderF_heading));
 
         config = Configuration.getInstance();
         schedule = Schedule.getInstance();

@@ -50,6 +50,8 @@ public class OrderActivity extends FragmentActivity implements OrderDialogFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
+        setTitle(getResources().getText(R.string.order_heading));
+
         config = Configuration.getInstance();
         schedule = Schedule.getInstance();
         scheduled_date = schedule.getCalendar_start();

@@ -3,23 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".front.order.OrderActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/order_textView_heading"
-        android:id="@+id/order_textView_heading"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/order_layout_location"
-        android:layout_below="@+id/order_textView_heading">
+        android:id="@+id/order_layout_location">
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,6 +27,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/order_textView_location_item"
+            android:textColor="@color/textColorLighter"
             android:id="@+id/order_textView_location_item" />
 
     </LinearLayout>
@@ -56,6 +51,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/order_textView_language_item"
+            android:textColor="@color/textColorLighter"
             android:id="@+id/order_textView_language_item" />
 
     </LinearLayout>
@@ -79,6 +75,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/order_textView_timespan_item"
+            android:textColor="@color/textColorLighter"
             android:id="@+id/order_textView_timespan_item" />
 
     </LinearLayout>
@@ -111,6 +108,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/order_layout_preferences"
         android:layout_below="@+id/order_layout_date_time">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/order_textView_preferences"/>
 
     </LinearLayout>
 

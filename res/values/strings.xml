@@ -10,7 +10,7 @@
     <string name="list_schedule_heading">Your orders</string>
 
     <!-- Order -->
-    <string name="order_textView_heading">Order your friend - Step 1</string>
+    <string name="order_heading">1/3 Order info</string>
     <string name="order_textView_location_desc">Location</string>
     <string name="order_textView_location_item">Select location</string>
     <string name="order_textView_language_desc">Language</string>
@@ -19,13 +19,15 @@
     <string name="order_textView_timespan_item">Select time span</string>
     <string name="order_button_datepicker">Select date</string>
     <string name="order_button_timepicker">Select time</string>
+    <string name="order_textView_preferences">Preferences</string>
     <string name="order_button_pick_friend">Find TripFriend</string>
 
+    <string name="orderF_heading">2/3 Select Friend</string>
     <string name="orderF_button_order">Order your TripFriend</string>
     <!-- Order PickFriend -->
 
     <!-- Order User -->
-    <string name="orderU_heading">User information</string>
+    <string name="orderU_heading">3/3 Your information</string>
     <string name="orderU_name">Name</string>
     <string name="orderU_email">Email</string>
     <string name="orderU_phone">Phone number</string>
@@ -33,5 +35,20 @@
     <string name="orderU_finish">Complete registration</string>
     <string name="orderU_pickup_location">Pickup location (Prague airport, Charles bridge, …)</string>
     <string name="orderU_notes">Notes</string>
+
+    <!-- Order complete -->
+    <string name="orderC_heading">Order complete</string>
+    <string name="orderC_thank_you">Thank you!</string>
+    <string name="orderC_email_notify">You will receive an email with the summarization of your order in a few minutes.</string>
+    <string name="orderC_love">We\'re sure that with the help of TripFriend you\'ll fall in love with</string>
+    <string name="orderC_goodbye">We look forward to seeing you soon!</string>
+    <string name="orderC_finish_order">Finish order</string>
+
+    <!-- List of schedules -->
+    <string name="list_schedule">Your schedules</string>
+    <string name="list_schedule_location">Location:</string>
+    <string name="list_schedule_language">Language:</string>
+    <string name="list_schedule_date_time">Date:</string>
+    <string name="list_schedule_pickup_location">Pickup location:</string>
 
 </resources>

@@ -32,6 +32,8 @@ public class OrderUserInfoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_user_info);
 
+        setTitle(getResources().getText(R.string.orderU_heading));
+
         loadConfiguration = LoadConfiguration.getInstance(OrderUserInfoActivity.this);
         schedule = Schedule.getInstance();
 

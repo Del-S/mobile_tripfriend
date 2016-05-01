@@ -60,6 +60,8 @@ public class MainActivity extends Activity {
 
         if(config.isSet() == false) {
             new AsyncTaskConfig(MainActivity.this).execute();
+        } else {
+            enableButtons();
         }
     }
 

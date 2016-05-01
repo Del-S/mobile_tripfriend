@@ -231,7 +231,7 @@ public class LoadConfiguration {
     /**
      * Load dummy friends
      */
-    /*public List<Friend> getFriends() {
+    /*public List<Friend> getFriendsDummy() {
         List<String> lang = new ArrayList<String>();
         lang.add("Czech");
         lang.add("English");
@@ -246,6 +246,23 @@ public class LoadConfiguration {
         }
         return friends;
     }*/
+
+    public List<Schedule> getSchedulesDummy() {
+        List<Schedule> schedules = new ArrayList<>();
+        Calendar c = Calendar.getInstance();
+        List<String> preferences = new ArrayList<>();
+        preferences.add("Neco");
+        preferences.add("Pub");
+        Schedule s = new Schedule(1, 245, 244, 180, 241, 1, c, "Test", "Testovic", "test@supertest.csz", "123456789", "Here and there", "Notes", preferences, null);
+        Schedule s2 = new Schedule(2, 245, 242, 360, 241, 2, c, "Super", "Test", "test@supertest.csz", "123456789", "North Pole", "Notes", preferences, null);
+        Schedule s3 = new Schedule(3, 245, 243, 180, 241, 1, c, "Name", "Namovic", "test@supertest.csz", "123456789", "Nowhere", "Notes", preferences, null);
+
+        schedules.add(s);
+        schedules.add(s2);
+        schedules.add(s3);
+
+        return schedules;
+    }
 
     public void setContext(Context context) {
         this.context = context;
