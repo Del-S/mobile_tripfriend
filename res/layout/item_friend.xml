@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/item_friend_image"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/item_friend_image" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="Friend Name"
         android:id="@+id/item_friend_name"
-        android:layout_gravity="center_horizontal" />
+        android:layout_toRightOf="@id/item_friend_image" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/item_friend_languages"
         android:layout_gravity="center_horizontal"
+        android:layout_toRightOf="@id/item_friend_image"
+        android:layout_below="@+id/item_friend_name"
         android:orientation="horizontal">
 
 
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

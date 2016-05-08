@@ -41,6 +41,7 @@ public class PickFriendAdapter extends ArrayAdapter<Friend>{
         txtName.setText(friend.getName());
 
         LinearLayout languagesLayout = (LinearLayout) convertView.findViewById(R.id.item_friend_languages);
+        languagesLayout.removeAllViews();
         List<String> languages = friend.getLanguages();
         for(int i = 0; languages.size() > i; i++ ) {
             ImageView imgLanguage = new ImageView(context);

@@ -11,7 +11,8 @@
         android:layout_height="175dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/relativeLayout">
 
         <ImageSwitcher
             android:layout_width="match_parent"
@@ -31,6 +32,24 @@
             android:padding="10dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" />
+
+        <ImageButton
+            style="@style/SliderButton"
+            android:layout_width="30dp"
+            android:layout_height="45dp"
+            android:id="@+id/main_button_slider_prev"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true" />
+
+        <ImageButton
+            style="@style/SliderButton"
+            android:layout_width="30dp"
+            android:layout_height="45dp"
+            android:id="@+id/main_button_slider_next"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:nestedScrollingEnabled="true"
+            android:shadowColor="#23e30e" />
 
     </RelativeLayout>
 
