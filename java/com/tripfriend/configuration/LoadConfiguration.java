@@ -3,6 +3,7 @@ package com.tripfriend.configuration;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -42,15 +43,16 @@ public class LoadConfiguration {
     private final String schedule_url = "http://10.0.2.2/tripfriend/tf-api/schedule/";
     private final String schedule_create_url = "http://10.0.2.2/tripfriend/tf-api/schedule/create/";
     private Context context;
+    private ApiService apiService;
 
     private static final LoadConfiguration loadConfiguration = new LoadConfiguration();
     public static LoadConfiguration getInstance(Context context) {
         loadConfiguration.setContext(context);
+        loadConfiguration.bindApiService(context);
         return loadConfiguration;
     }
 
     public void loadConfiguration() throws IOException, JSONException {
-        ApiService apiService = new ApiService();
         JSONObject jsonObject = apiService.getJsonObject(config_url);
 
         JSONObject configObject = jsonObject.getJSONObject("config");
@@ -83,7 +85,6 @@ public class LoadConfiguration {
     }
 
     private List<Friend> loadFriends() throws IOException, JSONException {
-        ApiService apiService = new ApiService(context);
         List<Friend> friends = new ArrayList<>();
 
         JSONObject jsonObject = apiService.getJsonObject(config_url);
@@ -136,8 +137,6 @@ public class LoadConfiguration {
     }
 
     public void getAvailableFriends() throws IOException, JSONException {
-        ApiService apiService = new ApiService(context);
-
         Schedule schedule = Schedule.getInstance();
 
         Calendar c = schedule.getCalendar_start();
@@ -158,8 +157,6 @@ public class LoadConfiguration {
     }
 
     public void completeOrder() throws IOException, JSONException {
-        ApiService apiService = new ApiService(context);
-
         Schedule schedule = Schedule.getInstance();
 
         Calendar c = schedule.getCalendar_start();
@@ -201,6 +198,13 @@ public class LoadConfiguration {
     private String getDateTime(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         return dateFormat.format(date);
+    }
+
+    public void getSchedules(String email) throws JSONException, IOException {
+        JSONObject jsonSend = new JSONObject();
+        jsonSend.put("email", email);
+
+        apiService.sendPost(2, schedule_url, jsonSend);
     }
 
     /**
@@ -267,4 +271,6 @@ public class LoadConfiguration {
     public void setContext(Context context) {
         this.context = context;
     }
+
+    public void bindApiService(Context context) { apiService = new ApiService(context); }
 }

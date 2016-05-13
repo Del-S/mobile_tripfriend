@@ -34,6 +34,9 @@ public class OrderCompleteActivity extends Activity {
         String textLove = getString(R.string.orderC_love);
         textViewLove.setText( textLove + " " + location );
 
+        // Delete data to disable reordering
+        schedule.resetSchedule();
+
         Button buttonFinish = (Button) findViewById(R.id.orderC_button_finish_order);
         buttonFinish.setOnClickListener(new View.OnClickListener() {
             @Override

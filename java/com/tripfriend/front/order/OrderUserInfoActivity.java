@@ -2,6 +2,7 @@ package com.tripfriend.front.order;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -43,6 +44,7 @@ public class OrderUserInfoActivity extends Activity {
             public void onClick(View v) {
                 if(checkInputs()) {
                     try {
+                        saveUserData();
                         loadConfiguration.completeOrder();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -131,5 +133,17 @@ public class OrderUserInfoActivity extends Activity {
         schedule.setNotes(notes);
 
         return ret;
+    }
+
+    private void saveUserData() {
+        SharedPreferences sp = getSharedPreferences("TripFriend", 0);
+        SharedPreferences.Editor se = sp.edit();
+
+        se.putString("name", schedule.getName());
+        se.putString("surname", schedule.getSurname());
+        se.putString("email", schedule.getEmail());
+        se.putString("phone", schedule.getPhone_number());
+
+        se.apply();
     }
 }

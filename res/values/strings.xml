@@ -54,6 +54,10 @@
     <string name="list_schedule_date_time">Date:</string>
     <string name="list_schedule_pickup_location">Pickup location:</string>
 
+    <string name="list_dialog_title">Enter email</string>
+    <string name="list_dialog_heading">Please enter your email:</string>
+    <string name="list_dialog_edit_text_hint">Email</string>
+
     <!-- About -->
     <string name="about_heading">About TripFriend</string>
     <string name="about_what_we_offer">WHAT DO WE OFFER?</string>

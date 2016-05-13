@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.tripfriend.front.list.ListScheduleActivity;
+import com.tripfriend.front.list.ListScheduleAdapter;
 import com.tripfriend.front.order.OrderActivity;
 import com.tripfriend.front.order.OrderUserInfoActivity;
 
@@ -172,6 +174,9 @@ public class ApiService {
                 OrderUserInfoActivity ouia = (OrderUserInfoActivity) context;
                 ouia.completeActivity(result);
                 break;
+            case 2:
+                ListScheduleActivity lsa = (ListScheduleActivity) context;
+                lsa.parseData(result);
         }
     }
 

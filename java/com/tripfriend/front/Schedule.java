@@ -1,5 +1,7 @@
 package com.tripfriend.front;
 
+import android.content.SharedPreferences;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -15,9 +17,7 @@ public class Schedule {
     private int id, location, language, time_span, id_friend, group;
     private Calendar calendar_start;
     private String name, surname, email, phone_number, pickup_location, notes;
-    private List<String> preferences;
-
-    private List<String> availableFriends;
+    private List<String> preferences, availableFriends;
 
     private static final Schedule schedule = new Schedule();
     public static Schedule getInstance() { return schedule; }
@@ -45,6 +45,16 @@ public class Schedule {
         this.location = -1;
         this.language = -1;
         this.time_span = -1;
+    }
+
+    public void resetSchedule() {
+        this.id = -1;
+        this.location = -1;
+        this.language = -1;
+        this.time_span = -1;
+        this.id_friend = -1;
+        this.calendar_start = null;
+        this.preferences = new ArrayList<String>();
     }
 
     public int getId() {

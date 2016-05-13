@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,6 +32,7 @@ import android.widget.ViewSwitcher;
 
 import com.tripfriend.configuration.Configuration;
 import com.tripfriend.configuration.LoadConfiguration;
+import com.tripfriend.front.Schedule;
 import com.tripfriend.front.about.AboutActivity;
 import com.tripfriend.front.order.OrderActivity;
 import com.tripfriend.front.list.ListScheduleActivity;
@@ -63,19 +65,10 @@ public class MainActivity extends Activity {
     int textCount = textIDs.length;
     int currTextID = -1;
     final String[] ext = { "gif", "png", "bmp", "jpg" };
-
-    /*Runnable imgRun = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                //updateImageSwitcher();
-            } finally {
-
-            }
-        }
-    };*/
+    boolean userData = false;
 
     // TODO:
+    // Block return from Complete order
     // view schedules by email
     // date and time starts at current time and not picked time (only on nth pick)
     // fill up data about tripfrined
@@ -90,6 +83,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         config = Configuration.getInstance();
+        if(!userData) { loadUserData(); }
         loadSlider();
 
         button_schedule = (Button) findViewById(R.id.main_button_schedule);
@@ -128,6 +122,18 @@ public class MainActivity extends Activity {
         }
     }
 
+    private void loadUserData() {
+        Schedule s = Schedule.getInstance();
+        SharedPreferences sp = getSharedPreferences("TripFriend", 0);
+
+        s.setName( sp.getString("name", "") );
+        s.setSurname( sp.getString("surname", "") );
+        s.setEmail( sp.getString("email", "") );
+        s.setPhone_number( sp.getString("phone", "") );
+
+        userData = true;
+    }
+
     private void loadSlider() {
         // Load all images
         try {
@@ -164,7 +170,6 @@ public class MainActivity extends Activity {
                 TextView tw = new TextView(getApplicationContext());
                 tw.setTextColor(getResources().getColor(R.color.colorWhite));
                 tw.setGravity(Gravity.CENTER);
-                //tw.setText(getString(R.string.main_slider_content_1));
                 return tw;
             }
         });
