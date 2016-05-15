@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ public class ListScheduleActivity extends FragmentActivity implements ListDialog
 
         setTitle(getResources().getText(R.string.list_schedule_heading));
         loadConfiguration = LoadConfiguration.getInstance(ListScheduleActivity.this);
+        dialogFragment = new ListDialogFragment();
 
         SharedPreferences sp = getSharedPreferences("TripFriend", 0);
         String email = sp.getString("email", "");
@@ -50,7 +53,6 @@ public class ListScheduleActivity extends FragmentActivity implements ListDialog
         // Display only if email is not in SharedPreferences
         // Else it will load AsyncTask
         if(email.equals("")) {
-            dialogFragment = new ListDialogFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable("titleDialog", getString(R.string.list_dialog_title));
             bundle.putSerializable("headingDialog", getString(R.string.list_dialog_heading));
@@ -61,6 +63,20 @@ public class ListScheduleActivity extends FragmentActivity implements ListDialog
         } else {
             getSchedules(email);
         }
+
+        Button change_email = (Button) findViewById(R.id.list_schedule_button_change_email);
+        change_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("titleDialog", getString(R.string.list_dialog_title));
+                bundle.putString("headingDialog", getString(R.string.list_dialog_heading));
+                bundle.putString("hintEditTextDialog", getString(R.string.list_dialog_edit_text_hint));
+                dialogFragment.setArguments(bundle);
+
+                dialogFragment.show(getSupportFragmentManager(), "emailSet");
+            }
+        });
     }
 
     @Override
@@ -96,7 +112,7 @@ public class ListScheduleActivity extends FragmentActivity implements ListDialog
     public void parseData(JSONObject result) {
         schedules = new ArrayList<>();
         try {
-            JSONObject schedulesObject = result.getJSONObject("shedules");
+            JSONObject schedulesObject = result.getJSONObject("schedules");
 
             JSONArray ids = schedulesObject.names();
             for(int i = 0; schedulesObject.length() > i; i++ ) {
@@ -114,6 +130,14 @@ public class ListScheduleActivity extends FragmentActivity implements ListDialog
                 Calendar calendar_start = Calendar.getInstance();
                 calendar_start.setTime( dateFormat.parse(date) );
 
+                String time = scheduleObject.getString("time");
+                System.out.println(time);
+                String[] time_calendar = time.split(":");
+                int hour = Integer.valueOf(time_calendar[0]);
+                int minute = Integer.valueOf(time_calendar[1]);
+                calendar_start.set(Calendar.MINUTE, minute);
+                calendar_start.set(Calendar.HOUR, hour);
+
                 String name = scheduleObject.getString("name");
                 String surname = scheduleObject.getString("surname");
                 String email = scheduleObject.getString("email");
@@ -122,7 +146,7 @@ public class ListScheduleActivity extends FragmentActivity implements ListDialog
                 String notes = scheduleObject.getString("notes");
 
                 JSONArray preferencesArray = scheduleObject.getJSONArray("preferences");
-                JSONArray availableFriendsArray = scheduleObject.getJSONArray("availableFriends");
+                JSONArray availableFriendsArray = scheduleObject.getJSONArray("available_friends");
                 List<String> preferences = loadConfiguration.parseSingleArrayNoID(preferencesArray);
                 List<String> availableFriends = loadConfiguration.parseSingleArrayNoID(availableFriendsArray);
 
@@ -138,5 +162,6 @@ public class ListScheduleActivity extends FragmentActivity implements ListDialog
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        displaySchedules();
     }
 }

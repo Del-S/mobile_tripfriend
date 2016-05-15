@@ -58,6 +58,8 @@
     <string name="list_dialog_heading">Please enter your email:</string>
     <string name="list_dialog_edit_text_hint">Email</string>
 
+    <string name="list_schedule_change_email">Change your email</string>
+
     <!-- About -->
     <string name="about_heading">About TripFriend</string>
     <string name="about_what_we_offer">WHAT DO WE OFFER?</string>

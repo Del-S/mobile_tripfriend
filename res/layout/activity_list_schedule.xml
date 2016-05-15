@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     tools:context="com.tripfriend.front.list.ListScheduleActivity">
 
-    <TextView
+    <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/list_schedule_heading"
-        android:id="@+id/list_schedule_heading"
+        android:text="@string/list_schedule_change_email"
+        android:id="@+id/list_schedule_button_change_email"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/list_schedule_listview"
-        android:layout_below="@+id/list_schedule_heading"
+        android:layout_below="@+id/list_schedule_button_change_email"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true" />

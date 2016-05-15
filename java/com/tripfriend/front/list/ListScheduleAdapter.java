@@ -15,6 +15,7 @@ import com.tripfriend.configuration.Configuration;
 import com.tripfriend.front.Friend;
 import com.tripfriend.front.Schedule;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ListScheduleAdapter extends ArrayAdapter<Schedule> {
@@ -40,7 +41,6 @@ public class ListScheduleAdapter extends ArrayAdapter<Schedule> {
         TextView dateTimeViewLocation = (TextView) convertView.findViewById(R.id.item_schedule_date_time);
         TextView pickupLocViewLocation = (TextView) convertView.findViewById(R.id.item_schedule_pickup_location);
 
-        System.out.println(friend.getImage());
         Bitmap bmp = BitmapFactory.decodeFile(context.getFilesDir() + "/" + friend.getImage());
         imageViewFriend.setImageBitmap(bmp);
 
@@ -52,8 +52,10 @@ public class ListScheduleAdapter extends ArrayAdapter<Schedule> {
         textLanguage += " " + config.getLanguages().get( schedule.getLanguage() );
         textViewLanguage.setText(textLanguage);
 
+        // TODO: change format by mobile settings
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
         String textDateTime = context.getString(R.string.list_schedule_date_time);
-        textDateTime += " " + schedule.getCalendar_start().getTime().toString();
+        textDateTime += " " + dateFormat.format(schedule.getCalendar_start().getTime());
         dateTimeViewLocation.setText(textDateTime);
 
         String textPickupLocation = context.getString(R.string.list_schedule_pickup_location);

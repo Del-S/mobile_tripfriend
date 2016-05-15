@@ -202,6 +202,7 @@ public class LoadConfiguration {
 
     public void getSchedules(String email) throws JSONException, IOException {
         JSONObject jsonSend = new JSONObject();
+        //jsonSend.put("email", "john@cena.cena");
         jsonSend.put("email", email);
 
         apiService.sendPost(2, schedule_url, jsonSend);
