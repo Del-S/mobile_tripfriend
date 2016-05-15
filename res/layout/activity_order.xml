@@ -1,132 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".front.order.OrderActivity">
-
-    <LinearLayout
-        android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:id="@+id/order_layout_location"
-        android:baselineAligned="false">
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context=".front.order.OrderActivity">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/order_textView_location_desc"
-            android:id="@+id/order_textView_location_desc" />
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:id="@+id/order_layout_location"
+            android:baselineAligned="false">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/order_textView_location_desc"
+                android:id="@+id/order_textView_location_desc" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/order_textView_location_item"
+                android:textColor="@color/textColorLighter"
+                android:id="@+id/order_textView_location_item" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/order_textView_location_item"
-            android:textColor="@color/textColorLighter"
-            android:id="@+id/order_textView_location_item" />
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:id="@+id/order_layout_language"
+            android:layout_below="@+id/order_layout_location">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/order_textView_language_desc"
+                android:id="@+id/order_textView_language_desc" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:id="@+id/order_layout_language"
-        android:layout_below="@+id/order_layout_location">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/order_textView_language_item"
+                android:textColor="@color/textColorLighter"
+                android:id="@+id/order_textView_language_item" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/order_textView_language_desc"
-            android:id="@+id/order_textView_language_desc" />
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:id="@+id/order_layout_timespan"
+            android:layout_below="@+id/order_layout_language">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/order_textView_timespan_desc"
+                android:id="@+id/order_textView_timespan_desc" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/order_textView_timespan_item"
+                android:textColor="@color/textColorLighter"
+                android:id="@+id/order_textView_timespan_item" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/order_textView_language_item"
-            android:textColor="@color/textColorLighter"
-            android:id="@+id/order_textView_language_item" />
+            android:id="@+id/order_layout_date_time"
+            android:gravity="center"
+            android:layout_below="@+id/order_layout_timespan">
 
-    </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_button_datepicker"
+                android:id="@+id/order_button_datepicker" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:id="@+id/order_layout_timespan"
-        android:layout_below="@+id/order_layout_language">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_button_timepicker"
+                android:id="@+id/order_button_timepicker" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/order_textView_timespan_desc"
-            android:id="@+id/order_textView_timespan_desc" />
+            android:id="@+id/order_layout_preferences"
+            android:layout_below="@+id/order_layout_date_time">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/order_textView_timespan_item"
-            android:textColor="@color/textColorLighter"
-            android:id="@+id/order_textView_timespan_item" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/order_textView_preferences"/>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/order_layout_date_time"
-        android:gravity="center"
-        android:layout_below="@+id/order_layout_timespan">
+        </LinearLayout>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/order_button_datepicker"
-            android:id="@+id/order_button_datepicker" />
+            android:text="@string/order_button_pick_friend"
+            android:id="@+id/order_button_pick_friend"
+            android:layout_below="@+id/order_layout_preferences"
+            android:layout_centerHorizontal="true" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/order_button_timepicker"
-            android:id="@+id/order_button_timepicker" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/order_layout_preferences"
-        android:layout_below="@+id/order_layout_date_time">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/order_textView_preferences"/>
-
-    </LinearLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/order_button_pick_friend"
-        android:id="@+id/order_button_pick_friend"
-        android:layout_below="@+id/order_layout_preferences"
-        android:layout_centerHorizontal="true" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

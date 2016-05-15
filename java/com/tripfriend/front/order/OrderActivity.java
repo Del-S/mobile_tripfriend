@@ -105,11 +105,10 @@ public class OrderActivity extends FragmentActivity implements OrderDialogFragme
 
     public void completeActivity(JSONObject availableFriendsObject) {
         try {
-            System.out.println(availableFriendsObject);
             JSONArray friendIDArray = availableFriendsObject.getJSONArray("available_friends");
             List<String> availableFriends = loadConfiguration.parseSingleArrayNoID( friendIDArray );
 
-            if(!availableFriends.equals("")) {
+            if(!availableFriends.isEmpty()) {
                 schedule.setAvailableFriends(availableFriends);
 
                 Intent intent = new Intent(OrderActivity.this, OrderPickFriendActivity.class);

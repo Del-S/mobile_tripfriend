@@ -36,12 +36,11 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 
 public class LoadConfiguration {
-    private final String config_url = "http://10.0.2.2/tripfriend/tf-api/";
-    //private final String config_url = "http://10.0.2.2/weather/";
-    private final String friend_url = "http://10.0.2.2/tripfriend/tf-api/friends/";
-    private final String friends_available_url = "http://10.0.2.2/tripfriend/tf-api/friends-available/";
-    private final String schedule_url = "http://10.0.2.2/tripfriend/tf-api/schedule/";
-    private final String schedule_create_url = "http://10.0.2.2/tripfriend/tf-api/schedule/create/";
+    private final String config_url = "http://tf.sucharda.cz/tf-api/";
+    private final String friend_url = "http://tf.sucharda.cz/tf-api/friends/";
+    private final String friends_available_url = "http://tf.sucharda.cz/tf-api/friends-available/";
+    private final String schedule_url = "http://tf.sucharda.cz/tf-api/schedule/";
+    private final String schedule_create_url = "http://tf.sucharda.cz/tf-api/schedule/create/";
     private Context context;
     private ApiService apiService;
 
@@ -71,7 +70,6 @@ public class LoadConfiguration {
 
         String start_time = configObject.getString("start_time");
         String end_time = configObject.getString("end_time");
-
 
         Configuration config = Configuration.getInstance();
         config.setLocations(locations);
@@ -108,6 +106,7 @@ public class LoadConfiguration {
                     languages,
                     new Date()
             ));
+            System.out.println(languages.toString());
         }
         return friends;
     }
