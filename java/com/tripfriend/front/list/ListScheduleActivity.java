@@ -37,6 +37,8 @@ public class ListScheduleActivity extends FragmentActivity implements ListDialog
     ListDialogFragment dialogFragment;
     LoadConfiguration loadConfiguration;
     List<Schedule> schedules;
+    ListScheduleAdapter schedulesAdapter;
+    ListView listViewSchedules;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,11 @@ public class ListScheduleActivity extends FragmentActivity implements ListDialog
         setTitle(getResources().getText(R.string.list_schedule_heading));
         loadConfiguration = LoadConfiguration.getInstance(ListScheduleActivity.this);
         dialogFragment = new ListDialogFragment();
+        schedules = new ArrayList<>();
+
+        listViewSchedules = (ListView) findViewById(R.id.list_schedule_listview);
+        schedulesAdapter = new ListScheduleAdapter(this, R.layout.item_schedule, schedules);
+        listViewSchedules.setAdapter(schedulesAdapter);
 
         SharedPreferences sp = getSharedPreferences("TripFriend", 0);
         String email = sp.getString("email", "");
@@ -93,6 +100,7 @@ public class ListScheduleActivity extends FragmentActivity implements ListDialog
     private void getSchedules(String email) {
         if(loadConfiguration != null) {
             try {
+                System.out.println(email);
                 loadConfiguration.getSchedules(email);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -103,8 +111,8 @@ public class ListScheduleActivity extends FragmentActivity implements ListDialog
     }
 
     private void displaySchedules() {
-        ListView listViewSchedules = (ListView) findViewById(R.id.list_schedule_listview);
-        ListScheduleAdapter schedulesAdapter = new ListScheduleAdapter(this, R.layout.item_schedule, schedules);
+        schedulesAdapter.clear();
+        schedulesAdapter = new ListScheduleAdapter(this, R.layout.item_schedule, schedules);
         listViewSchedules.setAdapter(schedulesAdapter);
         schedulesAdapter.notifyDataSetChanged();
     }
@@ -115,6 +123,7 @@ public class ListScheduleActivity extends FragmentActivity implements ListDialog
             JSONObject schedulesObject = result.getJSONObject("schedules");
 
             JSONArray ids = schedulesObject.names();
+            System.out.println(ids);
             for(int i = 0; schedulesObject.length() > i; i++ ) {
                 String idString = (String) ids.get(i);
                 JSONObject scheduleObject = schedulesObject.getJSONObject(idString);
@@ -131,7 +140,6 @@ public class ListScheduleActivity extends FragmentActivity implements ListDialog
                 calendar_start.setTime( dateFormat.parse(date) );
 
                 String time = scheduleObject.getString("time");
-                System.out.println(time);
                 String[] time_calendar = time.split(":");
                 int hour = Integer.valueOf(time_calendar[0]);
                 int minute = Integer.valueOf(time_calendar[1]);
