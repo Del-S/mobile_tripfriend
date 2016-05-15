@@ -13,6 +13,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DownloadFileService extends IntentService {
 
@@ -28,41 +30,43 @@ public class DownloadFileService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         File dir = getFilesDir();
-        String download_url = intent.getStringExtra("download_url");
+        List<String> downloads_url = intent.getStringArrayListExtra("downloads_url");
 
-        boolean download = true;
-        String filename = download_url;
-        filename = filename.substring(filename.lastIndexOf("/") + 1);
-        for(File file : dir.listFiles()) {
-            if( file.getName().equals(filename) ) download = false;
-        }
+        for( String download_url : downloads_url ) {
+            boolean download = true;
+            String filename = download_url;
+            filename = filename.substring(filename.lastIndexOf("/") + 1);
+            for (File file : dir.listFiles()) {
+                if (file.getName().equals(filename)) download = false;
+            }
 
-        if(download) {
-            try {
-                URL url = new URL(download_url);
-                URLConnection connection = url.openConnection();
-                connection.connect();
+            if (download) {
+                try {
+                    URL url = new URL(download_url);
+                    URLConnection connection = url.openConnection();
+                    connection.connect();
 
-                String filename_download = url.getFile();
-                filename = filename_download.substring(filename_download.lastIndexOf("/") + 1);
+                    String filename_download = url.getFile();
+                    filename = filename_download.substring(filename_download.lastIndexOf("/") + 1);
 
-                InputStream inputStream = new BufferedInputStream(connection.getInputStream());
-                OutputStream outputStream = openFileOutput(filename, MODE_PRIVATE);
+                    InputStream inputStream = new BufferedInputStream(connection.getInputStream());
+                    OutputStream outputStream = openFileOutput(filename, MODE_PRIVATE);
 
-                byte data[] = new byte[1024];
-                int count;
-                while ((count = inputStream.read(data)) != -1) {
-                    outputStream.write(data, 0, count);
+                    byte data[] = new byte[1024];
+                    int count;
+                    while ((count = inputStream.read(data)) != -1) {
+                        outputStream.write(data, 0, count);
+                    }
+                    outputStream.close();
+                    inputStream.close();
+
+                    showNotification(true, "Staženo");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showNotification(false, e.getMessage());
+                    showNotification(false, download_url);
                 }
-                outputStream.close();
-                inputStream.close();
-
-                showNotification(true, "Staženo");
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                showNotification(false, e.getMessage());
-                showNotification(false, download_url);
             }
         }
         this.stopSelf();

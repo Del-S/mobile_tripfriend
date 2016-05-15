@@ -80,6 +80,8 @@ public class LoadConfiguration {
         config.setEnd_time(end_time);
         config.setFriends(loadFriends());
         config.setIsSet(true);
+
+        apiService.initiateDownload();
     }
 
     private List<Friend> loadFriends() throws IOException, JSONException {
@@ -106,7 +108,6 @@ public class LoadConfiguration {
                     languages,
                     new Date()
             ));
-            System.out.println(languages.toString());
         }
         return friends;
     }

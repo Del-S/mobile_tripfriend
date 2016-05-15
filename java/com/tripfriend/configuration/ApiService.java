@@ -30,9 +30,11 @@ import javax.net.ssl.HttpsURLConnection;
 public class ApiService {
     private Context context;
     private int mode;
+    private ArrayList<String> download_send;
 
     public ApiService(Context context) {
         this.context = context;
+        download_send = new ArrayList<>();
     }
 
     public ApiService() {}
@@ -100,12 +102,12 @@ public class ApiService {
     }
 
     public List<String> downloadFiles(String[] downloadUrls) {
-        List<String> downloads = new ArrayList<>();
+        List<String> files = new ArrayList<>();
         for(String downloadUrl : downloadUrls) {
-            String downloaded_file = downloadFile( downloadUrl );
-            downloads.add(downloaded_file);
+            String downloaded_file = downloadFile(downloadUrl);
+            files.add(downloaded_file);
         }
-        return downloads;
+        return files;
     }
 
     public String downloadFile(String downloadUrl) {
@@ -125,13 +127,22 @@ public class ApiService {
             }
         }
 
-        if(download) {
-            Intent intent = new Intent(context, com.tripfriend.configuration.DownloadFileService.class);
-            intent.putExtra("download_url", downloadUrl);
-
-            context.startService(intent);
+        if (download) {
+            download_send.add(downloadUrl);
         }
         return filename;
+    }
+
+    public void initiateDownload() {
+        if(download_send != null) {
+            if (!download_send.isEmpty()) {
+                Intent intent = new Intent(context, com.tripfriend.configuration.DownloadFileService.class);
+                intent.putStringArrayListExtra("downloads_url", download_send);
+
+                context.startService(intent);
+            }
+        }
+        download_send = new ArrayList<>();
     }
 
     class AsyncTaskApi extends AsyncTask<String, Void, JSONObject> {
