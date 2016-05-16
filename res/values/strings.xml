@@ -3,9 +3,12 @@
     <string name="app_name">TripFriend</string>
 
     <!-- Main Activity -->
-    <string name="main_button_schedule">Order TripFriend</string>
-    <string name="main_button_about">About TripFriend</string>
+    <string name="main_schedule_promote">Order your TripFriend</string>
+    <string name="main_more_info_promote">More about TripFriend and your orders</string>
+
+    <string name="main_button_schedule">Get Started</string>
     <string name="main_button_list_schedules">View your orders</string>
+    <string name="main_button_about">Information about TripFriend</string>
 
     <string name="main_slider_content_1">Are you planning a trip to Prague and want to see not just the regular tourist destinations but the various local hotspots? We’ll help you with make your trip unforgettable!</string>
     <string name="main_slider_content_2">In Prague for the first time? Let us show you all the sights of this beautiful city. We want you to see the hidden gems!</string>

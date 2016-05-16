@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.tripfriend.MainActivity;
 import com.tripfriend.R;
 import com.tripfriend.configuration.Configuration;
 import com.tripfriend.configuration.LoadConfiguration;

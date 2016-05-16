@@ -39,18 +39,12 @@ import com.tripfriend.front.list.ListScheduleActivity;
 
 import org.json.JSONException;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 public class MainActivity extends Activity {
 
@@ -68,8 +62,6 @@ public class MainActivity extends Activity {
     boolean userData = false;
 
     // TODO:
-    // Block return from Complete order
-    // view schedules by email
     // date and time starts at current time and not picked time (only on nth pick)
     // fill up data about tripfrined
     // add images to slider and try to do automatic switches
@@ -155,8 +147,8 @@ public class MainActivity extends Activity {
             @Override
             public View makeView() {
                 ImageView imageView = new ImageView(getApplicationContext());
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                imageView.setLayoutParams(new ImageSwitcher.LayoutParams(ImageSwitcher.LayoutParams.WRAP_CONTENT, ImageSwitcher.LayoutParams.WRAP_CONTENT));
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setLayoutParams(new ImageSwitcher.LayoutParams(ImageSwitcher.LayoutParams.MATCH_PARENT, ImageSwitcher.LayoutParams.MATCH_PARENT));
                 return imageView;
             }
         });

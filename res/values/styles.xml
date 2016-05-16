@@ -9,7 +9,7 @@
     </style>
 
     <style name="SliderButton" parent="@android:style/Widget.ImageButton">
-        <item name="android:background">@color/colorAccent</item>
+        <item name="android:background">#50000000</item>
     </style>
 
 </resources>

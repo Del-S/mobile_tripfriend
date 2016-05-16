@@ -42,8 +42,17 @@ public class OrderCompleteActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(OrderCompleteActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(OrderCompleteActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        super.onBackPressed();
     }
 }

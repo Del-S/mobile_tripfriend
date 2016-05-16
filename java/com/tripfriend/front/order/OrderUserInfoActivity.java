@@ -66,6 +66,7 @@ public class OrderUserInfoActivity extends Activity {
             if(status.equals( "success" )) {
                 Intent intent = new Intent(OrderUserInfoActivity.this, OrderCompleteActivity.class);
                 startActivity(intent);
+                finish();
             } else {
                 Toast.makeText(OrderUserInfoActivity.this, "Schedule was not created.", Toast.LENGTH_SHORT).show();
             }
